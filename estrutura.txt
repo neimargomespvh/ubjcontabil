@@ -1,0 +1,35 @@
+src/
+├─ __init__.py
+├─ domain/
+│  ├─ __init__.py
+│  ├─ contracts/         extractor, transformer, loader, orchestrator (Protocols)
+│  ├─ enums/             OperacaoSync, SeveridadeErro, StatusMigracao
+│  └─ models/            Chunk, TransformResult, MigrationOptions/Progress/Result,
+│     └─ entities/       Participante*, ContaContabil, SpedRegistro, Empresa
+├─ extract/
+│  ├─ fortes/            connection, schema_discovery, *_extractor
+│  ├─ tron/              firebird_extractor, sped_txt_extractor
+│  └─ shared/            sqlserver_chunk_reader, file_chunk_reader
+├─ transform/
+│  ├─ mappings/          fortes_para_erp_map, sped_para_erp_map
+│  ├─ validators/        cpf_cnpj, plano_contas, participante
+│  ├─ normalizers/       normalizers
+│  ├─ sped/              parser, block_reader
+│  └─ participante_transformer.py
+├─ load/                 postgres_bulk_loader, postgres_fallback_loader,
+│                        sync_outbox_writer
+├─ infrastructure/
+│  ├─ logging/           migration_logger
+│  ├─ resilience/        retry_policy
+│  ├─ telemetry/         metrics
+│  └─ orchestrator.py
+└─ web/
+   ├─ app.py
+   └─ templates/         utilitarios_migracao.html
+
+tests/
+├─ test_cpf_cnpj.py
+└─ test_plano_contas.py
+
+pyproject.toml
+.gitignore

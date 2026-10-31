@@ -1,0 +1,19 @@
+# Ambiente virtual
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs do migrador
+migracao_erros.log
+migracao_quarentena.jsonl
+
+# IDE
+.vscode/
+.idea/
+
+# Build
+build/
+dist/
+*.egg-info/

@@ -1,0 +1,55 @@
+# Ambiente virtual
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Logs e quarentena
+migracao_erros.log
+migracao_quarentena.jsonl
+*.log
+
+# Uploads e dados locais
+uploads/
+data/*.txt
+data/*.xml
+*.db
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# Tooling caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Secrets / env
+.env
+.env.local
+*.pem
+*.key
+
+# Docker volumes
+pgdata/
+
+# Backup temporários
+*.bak
+*~

@@ -1,0 +1,1 @@
+"""Pacote gerado automaticamente."""

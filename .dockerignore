@@ -1,0 +1,17 @@
+.venv
+venv
+__pycache__
+*.pyc
+.git
+.gitignore
+.mypy_cache
+.pytest_cache
+.ruff_cache
+*.log
+uploads
+tools
+tests
+*.md
+.env
+.env.*
+pgdata

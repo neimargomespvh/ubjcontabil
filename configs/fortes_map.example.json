@@ -1,0 +1,37 @@
+{
+  "descricao": "Mapeamento configurável Fortes → ERP (exemplo)",
+  "tabelas": {
+    "participante": {
+      "schema": "dbo",
+      "tabela": "PARTICIPANTE",
+      "chave": "CODIGO",
+      "colunas": {
+        "codigo_origem": "CODIGO",
+        "razao_social": "RAZAO_SOCIAL",
+        "nome_fantasia": "NOME_FANTASIA",
+        "documento": "CNPJ_CPF",
+        "inscricao_estadual": "IE",
+        "inscricao_municipal": "IM",
+        "endereco": "ENDERECO",
+        "cidade": "CIDADE",
+        "uf": "UF",
+        "cep": "CEP",
+        "email": "EMAIL",
+        "telefone": "TELEFONE",
+        "tipo_pessoa": "TIPO_PESSOA"
+      }
+    },
+    "empresa": {
+      "schema": "dbo",
+      "tabela": "EMPRESA",
+      "chave": "CODIGO"
+    },
+    "plano_contas": {
+      "schema": "dbo",
+      "tabela": "PLANO_CONTAS",
+      "chave": "CODIGO"
+    }
+  },
+  "nolock": true,
+  "chunk_size": 5000
+}

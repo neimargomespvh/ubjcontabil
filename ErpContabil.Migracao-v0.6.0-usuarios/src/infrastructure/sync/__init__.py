@@ -1,0 +1,1 @@
+"""Sincronizador Delta local→nuvem."""

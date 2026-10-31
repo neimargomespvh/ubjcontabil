@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Migração — Admin</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1>Utilitários do Admin — Migração de Dados</h1>
+    <span id="health" class="badge">verificando…</span>
+  </header>
+
+  <section class="card">
+    <h2>📊 Sincronizador Delta (nuvem)</h2>
+    <p id="sync-resumo">carregando…</p>
+  </section>
+
+  <section class="card">
+    <h2>1) Migrador Fortes Tecnologia (SQL Server)</h2>
+    <form id="fortes-form">
+      <div class="grid">
+        <label>Host        <input name="host" value="localhost" required></label>
+        <label>Porta       <input name="porta" type="number" value="1433" required></label>
+        <label>Database    <input name="database" required></label>
+        <label>Usuário     <input name="usuario" required></label>
+        <label>Senha       <input name="senha" type="password" required></label>
+        <label>Empresa ID  <input name="empresa_id" required></label>
+      </div>
+      <fieldset>
+        <legend>Etapas</legend>
+        <label><input type="checkbox" name="etapas" value="empresa" checked> Empresa</label>
+        <label><input type="checkbox" name="etapas" value="plano_contas" checked> Plano</label>
+        <label><input type="checkbox" name="etapas" value="participante" checked> Participantes</label>
+      </fieldset>
+      <div class="actions">
+        <button type="button" id="fortes-test">Testar conexão</button>
+        <button type="submit">Iniciar migração</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>2) SPED .txt / NF-e .xml</h2>
+    <div id="dropzone" class="dropzone">
+      Arraste arquivos .txt (SPED) ou .xml (NF-e) aqui, ou
+      <input type="file" id="arquivo-input" multiple accept=".txt,.xml">
+    </div>
+    <label>Empresa ID <input id="empresa-id-arq" required></label>
+    <ul id="lista-arquivos"></ul>
+    <div class="actions">
+      <button id="arq-iniciar" disabled>Auditar SPED (grava em sped_registro)</button>
+      <button id="arq-estruturar" disabled>Importar SPED estruturado (0150+0500 → ERP)</button>
+    </div>
+  </section>
+
+  <section class="card" id="progresso-card" hidden>
+    <h2>Progresso — <span id="job-id"></span></h2>
+    <div class="progress">
+      <div id="progress-bar" class="progress-bar" style="width:0%">0%</div>
+    </div>
+    <p id="etapa"></p>
+    <p>
+      <strong>Processados:</strong> <span id="processados">0</span> ·
+      <strong>Erros:</strong> <span id="erros">0</span> ·
+      <strong>Importados:</strong> <span id="importados">0</span>
+    </p>
+    <p id="erro" class="erro"></p>
+  </section>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

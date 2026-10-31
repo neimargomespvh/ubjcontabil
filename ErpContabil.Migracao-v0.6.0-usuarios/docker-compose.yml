@@ -1,0 +1,63 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: erp
+      POSTGRES_PASSWORD: erp_secret
+      POSTGRES_DB: erp_contabil
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./ddl/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U erp -d erp_contabil"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  admin:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ERP_DATABASE_URL: postgresql://erp:erp_secret@db:5432/erp_contabil
+      JWT_SECRET: ${JWT_SECRET:-change-me-to-a-long-random-string-at-least-32-chars}
+      JWT_EXPIRE_MINUTES: ${JWT_EXPIRE_MINUTES:-480}
+      ADMIN_USER: ${ADMIN_USER:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-change-me-strong-password}
+      MIGRACAO_UPLOAD_DIR: /app/uploads
+      MIGRACAO_LOG: /app/logs/migracao_erros.log
+    ports:
+      - "8000:8000"
+    volumes:
+      - uploads:/app/uploads
+      - logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/api/migracao/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 25s
+
+  sync-worker:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ERP_DATABASE_URL: postgresql://erp:erp_secret@db:5432/erp_contabil
+      DELTA_BASE_URL: ${DELTA_BASE_URL:-}
+      DELTA_API_KEY: ${DELTA_API_KEY:-}
+      SYNC_BATCH_SIZE: ${SYNC_BATCH_SIZE:-100}
+      SYNC_POLL_INTERVAL_S: ${SYNC_POLL_INTERVAL_S:-5}
+    command: ["python", "scripts/run_sync_worker.py"]
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  uploads:
+  logs:

@@ -1,0 +1,35 @@
+{
+  "_comentario": "Exemplo de De-Para para a Tron. Rode TronSchemaDiscovery primeiro e ajuste os nomes reais. Formato: {coluna_origem: coluna_destino_ou_valor_literal}.",
+  "entidades": {
+    "participante": {
+      "tabela": "CLIENTES",
+      "campo_chave": "CODIGO",
+      "mapa": {
+        "CODIGO": "codigo_origem",
+        "NOME": "razao_social",
+        "FANTASIA": "nome_fantasia",
+        "CNPJ": "documento_cnpj",
+        "CPF": "documento_cpf",
+        "INSCR_EST": "inscricao_estadual",
+        "CIDADE": "municipio",
+        "UF": "uf",
+        "CEP": "cep",
+        "EMAIL": "email",
+        "FONE": "telefone",
+        "TIPO": "tipo_pessoa_literal"
+      }
+    },
+    "conta_contabil": {
+      "tabela": "PLANO_CONTAS",
+      "campo_chave": "CODIGO",
+      "mapa": {
+        "CODIGO": "codigo",
+        "DESCRICAO": "nome",
+        "COD_PAI": "codigo_pai",
+        "TIPO": "natureza_literal",
+        "NIVEL": "grau",
+        "NATUREZA": "natureza_saldo"
+      }
+    }
+  }
+}
