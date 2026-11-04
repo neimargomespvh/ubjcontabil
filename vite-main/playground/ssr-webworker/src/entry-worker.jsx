@@ -1,0 +1,33 @@
+import { equal } from 'node:assert'
+import browserExportsMessage from '@vitejs/test-browser-exports'
+import { format as cjsBuiltinRequire } from '@vitejs/test-cjs-node-builtin'
+import { msg as linkedMsg } from '@vitejs/test-resolve-linked'
+import workerExportsMessage from '@vitejs/test-worker-exports'
+import React from 'react'
+
+let loaded = false
+import('./dynamic').then(({ foo }) => {
+  loaded = !!foo
+})
+
+addEventListener('fetch', function (event) {
+  return event.respondWith(
+    new Response(
+      `
+    <h1>hello from webworker</h1>
+    <p class="linked">${linkedMsg}</p>
+    <p class="external">${typeof React}</p>
+    <p>dynamic: ${loaded}</p>
+    <p class="browser-exports">${browserExportsMessage}</p>
+    <p class="worker-exports">${workerExportsMessage}</p>
+    <p class="nodejs-compat">${equal('a', 'a') || '[success] nodejs compat'}</p>
+    <p class="cjs-node-builtin">${cjsBuiltinRequire()}</p>
+    `,
+      {
+        headers: {
+          'content-type': 'text/html',
+        },
+      },
+    ),
+  )
+})
